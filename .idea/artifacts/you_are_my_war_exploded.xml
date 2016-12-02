@@ -2,12 +2,12 @@
   <artifact type="exploded-war" name="you-are-my:war exploded">
     <output-path>$PROJECT_DIR$/out/artifacts/you_are_my_war_exploded</output-path>
     <root id="root">
-      <element id="javaee-facet-resources" facet="you-are-my/web/Web" />
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
           <element id="module-output" name="you-are-my" />
         </element>
       </element>
+      <element id="javaee-facet-resources" facet="you-are-my/web/Web" />
     </root>
   </artifact>
 </component>

@@ -5,15 +5,5 @@
          version="3.1">
 
 
-    <servlet>
-        <servlet-name>YouAreMy</servlet-name>
-        <jsp-file>/index.jsp</jsp-file>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>YouAreMy</servlet-name>
-        <url-pattern>/youaremy.png</url-pattern>
-    </servlet-mapping>
-
 
 </web-app>
