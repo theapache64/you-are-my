@@ -2,9 +2,7 @@ package database.tables;
 
 import com.sun.istack.internal.NotNull;
 import com.sun.istack.internal.Nullable;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import database.Connection;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -48,9 +46,6 @@ public class BaseTable<T> {
         throw new IllegalArgumentException(ERROR_MESSAGE_UNDEFINED_METHOD);
     }
 
-    public boolean add(@Nullable final String victimId, final JSONObject jsonObject) {
-        throw new IllegalArgumentException(ERROR_MESSAGE_UNDEFINED_METHOD);
-    }
 
     public String addv3(T newInstance) throws InsertFailedException {
         throw new IllegalArgumentException(ERROR_MESSAGE_UNDEFINED_METHOD);
@@ -93,13 +88,6 @@ public class BaseTable<T> {
         throw new IllegalArgumentException(ERROR_MESSAGE_UNDEFINED_METHOD);
     }
 
-    public void addv2(@Nullable final String requestId, final JSONArray jsonArray) throws RuntimeException, JSONException {
-        throw new RuntimeException(ERROR_MESSAGE_UNDEFINED_METHOD);
-    }
-
-    protected List<T> parse(final String victimId, @NotNull JSONArray jsonArray) throws JSONException {
-        throw new IllegalArgumentException(ERROR_MESSAGE_UNDEFINED_METHOD);
-    }
 
     public boolean update(T t) {
         throw new IllegalArgumentException(ERROR_MESSAGE_UNDEFINED_METHOD);
@@ -202,50 +190,6 @@ public class BaseTable<T> {
         }
 
         return totalCount;
-    }
-
-    public JSONArray get(final String columnToReturn, final String whereInColumn, JSONArray whereInValue) throws JSONException {
-
-        JSONArray jaFcmIds = null;
-        final StringBuilder queryBuilder = new StringBuilder(String.format("SELECT %s FROM %s WHERE %s IN (", columnToReturn, tableName, whereInColumn));
-
-        for (int i = 0; i < whereInValue.length(); i++) {
-            queryBuilder.append("'").append(whereInValue.getString(i)).append("'");
-
-            if (i < (whereInValue.length() - 1)) {
-                queryBuilder.append(",");
-            } else {
-                queryBuilder.append(");");
-            }
-        }
-
-        final java.sql.Connection con = Connection.getConnection();
-        try {
-            final Statement stmt = con.createStatement();
-            final ResultSet rs = stmt.executeQuery(queryBuilder.toString());
-
-            if (rs.first()) {
-                jaFcmIds = new JSONArray();
-                do {
-                    jaFcmIds.put(rs.getString(columnToReturn));
-                } while (rs.next());
-            }
-
-            rs.close();
-            stmt.close();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                con.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-
-
-        return jaFcmIds;
     }
 
     public static class InsertFailedException extends SQLException {
