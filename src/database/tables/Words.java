@@ -13,7 +13,7 @@ import java.sql.Statement;
 public class Words extends BaseTable<Word> {
 
     private static final Words instance = new Words();
-    private static final String COLUMN_WORD = "word";
+    public static final String COLUMN_WORD = "word";
 
     private Words() {
         super("words");

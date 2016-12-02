@@ -39,14 +39,18 @@ public class YouAreMyServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse response) throws ServletException, IOException {
 
 
-        //Getting word
-        final Word randomWord = Words.getInstance().getRandomWord();
-
         //Adding request
         try {
-            Requests.getInstance().add(new Request(randomWord.getId(), req.getRemoteAddr()));
+            final String ipAddress = req.getRemoteAddr();
+            Word word = Requests.getInstance().getWord(ipAddress);
 
-            final String text = "You're my " + randomWord.getWord();
+            //Getting word
+            if (word == null) {
+                word = Words.getInstance().getRandomWord();
+                Requests.getInstance().add(new Request(word.getId(), ipAddress));
+            }
+
+            final String text = "You're my " + word.getWord();
             final Font font = FontUtils.getRobotoRegular(getServletContext());
 
             // create temporary 1x1 image to get FontRenderingContext needed to calculate image size
