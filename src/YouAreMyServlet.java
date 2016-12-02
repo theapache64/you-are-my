@@ -1,4 +1,5 @@
 import com.sun.image.codec.jpeg.JPEGCodec;
+import database.tables.Words;
 
 import javax.imageio.ImageIO;
 import javax.jws.WebService;
@@ -39,7 +40,7 @@ public class YouAreMyServlet extends HttpServlet {
         graphics.setFont(font);
 
         // write 'Hello World!' string in the image
-        graphics.drawString("Hello World!", 5, 30);
+        graphics.drawString(Words.getInstance().getRandomWord().getWord(), 5, 30);
 
         // release resources used by graphics context
         graphics.dispose();
